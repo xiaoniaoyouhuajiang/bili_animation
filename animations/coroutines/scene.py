@@ -17,19 +17,28 @@ class CoroutineLifecycle(Scene):
         # --- Phase 0: Setup Scene ---
         self.camera.background_color = WHITE # Use white background for better contrast maybe? Or keep default? Let's try white.
         # Manim's default color is BLACK, let's revert if white is not good.
-        # self.camera.background_color = BLACK
+        # self.camera.background_color = BLACK # Keep background white for now
+
+        # --- Layout Adjustments ---
+        # Reduce buffer between boxes and maybe scale slightly less if needed
+        box_buff = 0.2 # Further reduced buffer
+        box_scale = 0.8 # Slightly smaller scale again
 
         # Create main containers
-        os_thread = OSThreadBox().scale(0.9).to_edge(UL, buff=0.5)
-        runtime_box = RuntimeBox().next_to(os_thread.box, RIGHT, buff=0.5).align_to(os_thread.box, UP)
-        cpu_box = CPUBox().next_to(runtime_box.box, RIGHT, buff=0.5).align_to(os_thread.box, UP)
+        os_thread = OSThreadBox().scale(box_scale).to_edge(UL, buff=0.4) # Slightly less edge buff
+        runtime_box = RuntimeBox().scale(box_scale).next_to(os_thread.box, RIGHT, buff=box_buff).align_to(os_thread.box, UP)
+        cpu_box = CPUBox().scale(box_scale).next_to(runtime_box.box, RIGHT, buff=box_buff).align_to(os_thread.box, UP)
 
-        # Create Thread Mobjects (T0, T1, T2)
-        # T0 (base thread) - starts as Running (simplified)
-        thread0 = ThreadMobject("0", initial_state="Running").next_to(os_thread.box, DOWN, buff=0.5).align_to(os_thread.box, LEFT).shift(RIGHT*0.5)
-        # T1 and T2 - start as Available
-        thread1 = ThreadMobject("1", initial_state="Available").next_to(thread0, RIGHT, buff=0.5)
-        thread2 = ThreadMobject("2", initial_state="Available").next_to(thread1, RIGHT, buff=0.5)
+        # Create Thread Mobjects (T0, T1, T2) - Position them INSIDE os_thread box
+        thread_scale = 1
+        thread_buff = 1
+        # Position T0 inside, near bottom-left, ensuring it uses scaled height/width for positioning
+        thread0 = ThreadMobject("0", initial_state="Running").scale(thread_scale)
+        thread0.move_to(os_thread.box.get_corner(LEFT) + UP * (thread0.get_height() / 2 + 0.3) + RIGHT * (thread0.get_width() / 2 + 0.3))
+
+        # Position T1 and T2 relative to T0
+        thread1 = ThreadMobject("1", initial_state="Available").scale(thread_scale).next_to(thread0, RIGHT, buff=thread_buff)
+        thread2 = ThreadMobject("2", initial_state="Available").scale(thread_scale).next_to(thread1, RIGHT, buff=thread_buff)
 
         threads = {"T0": thread0, "T1": thread1, "T2": thread2}
 
