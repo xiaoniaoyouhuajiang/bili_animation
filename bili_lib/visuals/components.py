@@ -4,7 +4,7 @@ BLUE_COLOR = BLUE_D # 使用 Manim 预设的深蓝色
 
 class OSThreadBox(VGroup):
     """Represents the OS Thread container."""
-    def __init__(self, width=12, height=6.5, label="OS Thread", **kwargs):
+    def __init__(self, width=14.5, height=6.5, label="OS Thread", **kwargs):
         super().__init__(**kwargs)
         self.box = Rectangle(width=width, height=height, color=BLUE_COLOR, stroke_width=2)
         self.label = Text(label, font_size=24).next_to(self.box, UP, buff=0.1)
@@ -14,16 +14,16 @@ class CPUBox(VGroup):
     """Represents the CPU with key registers."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.box = Rectangle(width=2.5, height=2, color=BLUE_COLOR, stroke_width=2)
+        self.box = Rectangle(width=4.5, height=3.5, color=BLUE_COLOR, stroke_width=2)
         self.label = Text("CPU", font_size=20).next_to(self.box, UP, buff=0.1)
 
         # Register placeholders (simplified)
         self.registers = VGroup(
-            Text("rsp: 0x...", font_size=16),
-            Text("rip: 0x...", font_size=16),
-            Text("rbx: 0x...", font_size=16),
-            Text("rbp: 0x...", font_size=16),
-            Text("r12: 0x...", font_size=16),
+            Text("rsp: 0x...", font_size=32),
+            Text("rip: 0x...", font_size=32),
+            Text("rbx: 0x...", font_size=32),
+            Text("rbp: 0x...", font_size=32),
+            Text("r12: 0x...", font_size=32),
             # Add r13-r15 if needed
         ).arrange(DOWN, buff=0.1, aligned_edge=LEFT).scale(0.8).move_to(self.box.get_center())
 
@@ -46,7 +46,7 @@ class CPUBox(VGroup):
 
 class ThreadMobject(VGroup):
     """Represents a Coroutine Thread."""
-    def __init__(self, thread_id: str, initial_state="Available", width=1.8, height=2.5, **kwargs):
+    def __init__(self, thread_id: str, initial_state="Available", width=2.3, height=2.5, **kwargs):
         super().__init__(**kwargs)
         self.thread_id = thread_id
         self.box = Rectangle(width=width, height=height, color=BLUE_COLOR, stroke_width=2)
@@ -64,10 +64,10 @@ class ThreadMobject(VGroup):
         self.ctx_box = Rectangle(width=width * 0.4, height=height * 0.6, color=GREY_BROWN, fill_opacity=0.3)
         self.ctx_label = Text("Ctx", font_size=14).next_to(self.ctx_box, DOWN, buff=0.1)
         self.ctx_registers = VGroup( # Placeholder for saved registers
-             Text("rsp: -", font_size=12),
-             Text("rip: -", font_size=12),
-             Text("...", font_size=12)
-        ).arrange(DOWN, buff=0.05).scale(0.7).move_to(self.ctx_box.get_center())
+             Text("rsp: -", font_size=24),
+             Text("rip: -", font_size=24),
+             Text("...", font_size=24)
+        ).arrange(DOWN, buff=0.05).move_to(self.ctx_box.get_center())
         self.ctx_group = VGroup(self.ctx_box, self.ctx_label, self.ctx_registers).align_to(self.box, RIGHT).shift(LEFT * 0.1 + DOWN * 0.1)
 
 
@@ -118,7 +118,7 @@ class RuntimeBox(VGroup):
         self.threads_group = VGroup(self.threads_area, self.threads_label).move_to(self.box.get_center()).shift(DOWN*0.3)
 
         # Placeholder for current pointer
-        self.current_label = Text("current: T?", font_size=16).next_to(self.threads_group, DOWN, buff=0.2)
+        self.current_label = Text("current: T?", font_size=20).next_to(self.threads_group, DOWN, buff=0.1)
 
         self.add(self.box, self.label, self.threads_group, self.current_label)
 

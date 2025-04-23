@@ -72,7 +72,7 @@ class CoroutineLifecycle(Scene):
         run_code = Code(
             code_string="runtime.run() {\n  // loop {\n    t_yield();\n  // }\n}",
             language="rust", formatter_style="default", paragraph_config={"font_size": 18}
-        ).next_to(runtime_box, DOWN, buff=0.3).align_to(runtime_box, LEFT)
+        ).next_to(os_thread, DOWN, buff=0.3).align_to(os_thread, LEFT)
         yield_code = Code(
             code_string="t_yield() {\n  // 1. Find next ready thread\n  // 2. Switch context\n}",
             language="rust", formatter_style="default", paragraph_config={"font_size": 18}
@@ -371,9 +371,9 @@ class CoroutineLifecycle(Scene):
         cpu_box = CPUBox().scale(box_scale).next_to(runtime_box.box, RIGHT, buff=box_buff).align_to(os_thread.box, UP)
 
         thread_scale = 1
-        thread_buff = 1
+        thread_buff = 0.6
         thread0 = ThreadMobject("0", initial_state="Running").scale(thread_scale)
-        thread0.move_to(os_thread.box.get_corner(LEFT) + UP * (thread0.get_height() / 4 ) + RIGHT * (thread0.get_width() / 2 + 0.3))
+        thread0.move_to(os_thread.box.get_corner(DL) + UP * (thread0.get_height() / 2 ) + RIGHT * (thread0.get_width() / 2 + 0.3))
         thread1 = ThreadMobject("1", initial_state="Available").scale(thread_scale).next_to(thread0, RIGHT, buff=thread_buff)
         thread2 = ThreadMobject("2", initial_state="Available").scale(thread_scale).next_to(thread1, RIGHT, buff=thread_buff)
         threads = {"T0": thread0, "T1": thread1, "T2": thread2}
@@ -408,7 +408,7 @@ class CoroutineLifecycle(Scene):
             language="rust",
             formatter_style="default",
             paragraph_config={"font_size": 18}
-        ).next_to(self.runtime_box, DOWN, buff=0.3).align_to(self.runtime_box, LEFT)
+        ).next_to(self.os_thread, DOWN, buff=0.3).align_to(self.os_thread, LEFT)
         self.play(FadeIn(spawn_code))
         self.play(Indicate(thread_to_spawn.box, color=YELLOW, scale_factor=1.1))
 
