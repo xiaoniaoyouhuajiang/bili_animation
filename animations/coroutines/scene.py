@@ -33,7 +33,7 @@ class CoroutineLifecycle(Scene):
             code_string="let mut runtime = Runtime::new();\nruntime.init();",
             language="rust",
             formatter_style="default", # Use formatter_style
-            paragraph_config={"font_size": 18} # Pass font_size via paragraph_config
+            paragraph_config={"font_size": 14} # Pass font_size via paragraph_config
         ).next_to(runtime_box, DOWN, buff=0.3).align_to(runtime_box, LEFT)
 
         self.play(FadeIn(runtime_init_code))
@@ -71,11 +71,11 @@ class CoroutineLifecycle(Scene):
         # 3.1 Show runtime.run() leading to t_yield()
         run_code = Code(
             code_string="runtime.run() {\n  // loop {\n    t_yield();\n  // }\n}",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(os_thread, DOWN, buff=0.3).align_to(os_thread, LEFT)
         yield_code = Code(
             code_string="t_yield() {\n  // 1. Find next ready thread\n  // 2. Switch context\n}",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(run_code, RIGHT, buff=0.5)
 
         self.play(FadeIn(run_code))
@@ -96,7 +96,7 @@ class CoroutineLifecycle(Scene):
         # 3.3 Show switch call
         switch_code = Code(
             code_string="// Get old_ctx (T0), new_ctx (T1)\nswitch(old_ctx, new_ctx);",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(yield_code, RIGHT, buff=0.5)
         self.play(FadeIn(switch_code))
         self.wait(1)
@@ -246,11 +246,11 @@ class CoroutineLifecycle(Scene):
         # Recreate yield_code and switch_code if they were cleaned up
         yield_code = Code(
             code_string="t_yield() {\n  // 1. Find next ready thread\n  // 2. Switch context\n}",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(self.runtime_box, DOWN, buff=0.3).shift(RIGHT*1.5) # Adjust position
         switch_code = Code(
             code_string="// Get old_ctx, new_ctx\nswitch(old_ctx, new_ctx);",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(yield_code, RIGHT, buff=0.5)
 
         # Saved contexts from previous phases needed for the final switch
@@ -304,11 +304,11 @@ class CoroutineLifecycle(Scene):
         # Recreate yield_code and switch_code if they were cleaned up or create them fresh
         yield_code = Code(
             code_string="t_yield() {\n  // 1. Find next ready thread\n  // 2. Switch context\n}",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(self.runtime_box, DOWN, buff=0.3).shift(RIGHT*1.5) # Adjust position as needed
         switch_code = Code(
             code_string="// Get old_ctx, new_ctx\nswitch(old_ctx, new_ctx);",
-            language="rust", formatter_style="default", paragraph_config={"font_size": 18}
+            language="rust", formatter_style="default", paragraph_config={"font_size": 14}
         ).next_to(yield_code, RIGHT, buff=0.5) # Adjust position as needed
 
         # Saved contexts from previous phases needed for the final switch
@@ -407,7 +407,7 @@ class CoroutineLifecycle(Scene):
             code_string=f"runtime.spawn(|| {{\n  // {thread_func_name} function body...\n}});",
             language="rust",
             formatter_style="default",
-            paragraph_config={"font_size": 18}
+            paragraph_config={"font_size": 14}
         ).next_to(self.os_thread, DOWN, buff=0.3).align_to(self.os_thread, LEFT)
         self.play(FadeIn(spawn_code))
         self.play(Indicate(thread_to_spawn.box, color=YELLOW, scale_factor=1.1))

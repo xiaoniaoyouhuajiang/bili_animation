@@ -75,7 +75,8 @@ class ThreadMobject(VGroup):
 
     def update_state(self, new_state: str):
         """Returns an animation to update the state label."""
-        new_label = Text(f"State: {new_state}", font_size=self.state_label.font_size, color=YELLOW)
+        # new_label = Text(f"State: {new_state}", font_size=self.state_label.font_size, color=YELLOW)
+        new_label = Text(f"State: {new_state}", font_size=16, color=YELLOW)
         new_label.move_to(self.state_label)
         return Transform(self.state_label, new_label)
 
@@ -89,8 +90,10 @@ class ThreadMobject(VGroup):
         new_rsp_text = f"rsp: {ctx_values.get('rsp', '-')}"
         new_rip_text = f"rip: {ctx_values.get('rip', '-')}"
 
-        new_rsp_label = Text(new_rsp_text, font_size=rsp_label.font_size).move_to(rsp_label).align_to(rsp_label, LEFT)
-        new_rip_label = Text(new_rip_text, font_size=rip_label.font_size).move_to(rip_label).align_to(rip_label, LEFT)
+        # new_rsp_label = Text(new_rsp_text, font_size=rsp_label.font_size).move_to(rsp_label).align_to(rsp_label, LEFT)
+        # new_rip_label = Text(new_rip_text, font_size=rip_label.font_size).move_to(rip_label).align_to(rip_label, LEFT)
+        new_rsp_label = Text(new_rsp_text, font_size=24).move_to(rsp_label).align_to(rsp_label, LEFT)
+        new_rip_label = Text(new_rip_text, font_size=24).move_to(rip_label).align_to(rip_label, LEFT)
 
         animations.append(Transform(rsp_label, new_rsp_label))
         animations.append(Transform(rip_label, new_rip_label))
